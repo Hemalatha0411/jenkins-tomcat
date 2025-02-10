@@ -10,7 +10,7 @@ pipeline {
 	
 	stage('Build'){
 		steps{
-			sh "cd Calculator-project && mvn clean install -Dmaven.test.skip=true"
+			sh "cd Calculator-project/Calculator-project && mvn clean install -Dmaven.test.skip=true"
 		}
 	}
 	
