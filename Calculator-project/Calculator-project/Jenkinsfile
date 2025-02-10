@@ -10,13 +10,13 @@ pipeline {
 	
 	stage('Build'){
 		steps{
-			sh "cd Calculator-project/Calculator-project && mvn clean install -Dmaven.test.skip=true"
+			sh "cd Calculator-project/Calculator-project && mvn clean install -Dmaven.test.skip=true && cp Calculator-project/Calculator-project/target/*.jar Calculator-project/Calculator-project/target/*.war "
 		}
 	}
 	
 	stage('Archive Artifact'){
 		steps{
-		archiveArtifacts artifacts:'Calculator-project/Calculator-project/target/*.jar'
+		archiveArtifacts artifacts:'Calculator-project/Calculator-project/target/*.war'
 		}
 	}
 	
@@ -24,7 +24,7 @@ pipeline {
 		steps{
 		deploy adapters: [tomcat9(url: 'http://34.204.10.128:8080/', 
                               credentialsId: 'tomcat-cred')], 
-                     war: 'Calculator-project/Calculator-project/target/*.jar',
+                     war: 'Calculator-project/Calculator-project/target/*.war',
                      contextPath: 'app'
 		}
 		
