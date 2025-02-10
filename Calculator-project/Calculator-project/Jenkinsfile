@@ -16,7 +16,7 @@ pipeline {
 	
 	stage('Archive Artifact'){
 		steps{
-		archiveArtifacts artifacts:'target/*.war'
+		archiveArtifacts artifacts:'target/*.jar'
 		}
 	}
 	
@@ -24,20 +24,10 @@ pipeline {
 		steps{
 		deploy adapters: [tomcat9(url: 'http://34.204.10.128:8080/', 
                               credentialsId: 'tomcat-cred')], 
-                     war: 'target/*.war',
+                     war: 'target/*.jar',
                      contextPath: 'app'
 		}
 		
 	}
-	
-	stage('Notification'){
-		steps{
-		emailext(
-			subject: "Job Completed",
-			body: "Jenkins pipeline job for maven build job completed",
-			to: "hemalathamaha98@gmail.com"
-		)
-		}
-	}
-	}
+    }
 }
